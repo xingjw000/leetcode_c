@@ -1,41 +1,49 @@
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
+# 编译输出
 *.o
 *.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Linker files
-*.ilk
-
-# Debugger Files
-*.pdb
-
-# Compiled Dynamic libraries
 *.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
 *.a
 *.lib
-
-# Executables
+*.dll
 *.exe
 *.out
 *.app
+main
 
-# debug information files
-*.dwo
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+compile_commands.json
+
+# Make
+*.make
+
+# Debug / Release
+Debug/
+Release/
+build/
+bin/
+
+# 日志
+*.log
+
+# 临时文件
+*.tmp
+*.swp
+*~
+.DS_Store
+
+# VSCode
+.vscode/
+
+# CLion
+.idea/
+
+# Visual Studio
+*.vcxproj*
+*.sln
+*.user
+*.pdb
+*.ilk
