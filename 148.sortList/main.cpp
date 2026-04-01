@@ -76,8 +76,11 @@ public:
             
             ListNode *list_l = dfs(left, mid);
             ListNode *list_r = dfs(mid, right);
+
+            return megeList(list_l, list_r);
         };
-        
+
+        return dfs(head, nullptr); 
     }
 
     ListNode* megeList(ListNode* list1, ListNode* list2){
@@ -86,12 +89,25 @@ public:
         ListNode *p1 = list1;
         ListNode *p2 = list2;
         while(p1 && p2){
-            if (p1 )
+            if (p1->val < p2->val)
             {
-                /* code */
+                p->next = p1;
+                p1 = p1->next;
             }
-            
+            else{
+                p->next = p2;
+                p2 = p2->next;
+            } 
+            p = p->next;
         }
+
+        if (p1)
+        {
+            p->next = p1;
+        }else if(p2){
+            p->next = p2;
+        }
+       return  dummyHead.next;
     }
 };
 
@@ -108,21 +124,16 @@ void list_print(ListNode *list){
 
 int main()
 { 
-    ListNode l1_node1(9);
-    ListNode l1_node2(9, &l1_node1);
-    ListNode l1_node3(9, &l1_node2);
-    ListNode l1_node4(8, &l1_node3);
-    ListNode l1_node5(9, &l1_node4);
-    ListNode l1_node6(9, &l1_node5);
-    ListNode l1_node7(9, &l1_node6);
-    ListNode l1_node8(9, &l1_node7);
-    ListNode l1_node9(9, &l1_node8);
-    ListNode l1_node10(1, &l1_node9);
+    ListNode l1_node1(0);
+    ListNode l1_node2(4, &l1_node1);
+    ListNode l1_node3(3, &l1_node2);
+    ListNode l1_node4(5, &l1_node3);
+    ListNode l1_node5(-1, &l1_node4);
 
-    list_print(&l1_node10); 
+    list_print(&l1_node5); 
 
     Solution sol;
-    auto result = sol.sortList(&l1_node10);
+    auto result = sol.sortList(&l1_node5);
     list_print(result); 
     return 0;
 }
