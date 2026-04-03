@@ -22,24 +22,19 @@ using namespace std;
 
 class Solution {
 public:
-    void rotate(vector<int>& nums, int k) {
-
-        if (nums.size() <= 1)
-        {
-            return;
-        }
-        
-        int tmp;
+    void rotate(vector<int>& nums, int k) {        
         k = k % nums.size();
-        for (int i = 0; i < k; i++)
-        {
-            tmp = nums.back();
+        revese(nums, 0, nums.size() - 1);
+        revese(nums, 0, k - 1);
+        revese(nums, k, nums.size() - 1);
 
-            for (int j = nums.size() - 2; j >= 0 ; j--)
-            {
-                nums[j+1] = nums[j];
-            }
-            nums[0] = tmp;
+    }
+
+    void revese(vector<int>& nums, int l, int r){
+        while(l < r){
+            swap(nums[l], nums[r]);
+            l++;
+            r--;
         }
     }
 };
@@ -67,7 +62,18 @@ int main()
         cout << v << ",";
     }
 
-    cout << endl;    
+    cout << endl;   
+    
+    vector<int> test3 = {1,2,3,4,5,6};
+    sol.rotate(test3, 4);
+    
+    cout << "test3:";
+    for (auto &v : test3)
+    {
+        cout << v << ",";
+    }
+
+    cout << endl;      
     
     return 0;
 }
