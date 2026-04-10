@@ -16,36 +16,86 @@ public:
         vector<int> ans;
         ans.reserve(m*n);
 
-        auto dfs = [&](auto &&self, int m_start, int m, int n_start, int n){
-            if (m_start >= m || n_start >= n)
-            {
-                return;
-            }
+        // dfs
+        // auto dfs = [&](auto &&self, int m_start, int m, int n_start, int n){
+        //     if (m_start >= m || n_start >= n)
+        //     {
+        //         return;
+        //     }
 
-            for (int i = n_start; i < n; i++)
-            {
-                ans.push_back(matrix[m_start][i]);
-            }
+        //     for (int i = n_start; i < n; i++)
+        //     {
+        //         ans.push_back(matrix[m_start][i]);
+        //     }
 
-            for (int i = m_start + 1; i < m; i++)
-            {
-                ans.push_back(matrix[i][n - 1]);
-            }
+        //     for (int i = m_start + 1; i < m; i++)
+        //     {
+        //         ans.push_back(matrix[i][n - 1]);
+        //     }
 
-            for (int i = n - 2; i >= n_start + 1; i--)
-            {
-                ans.push_back(matrix[m - 1][i]);
-            }
+        //     if(m_start < m - 1)
+        //     {
+        //         for (int i = n - 2; i >= n_start; i--)
+        //         {
+        //             ans.push_back(matrix[m - 1][i]);
+        //         }
+        //     }
 
-            for (int i = m - 1; i >= m_start + 1; i--)
-            {
-                ans.push_back(matrix[i][n_start]);
-            }
+        //     if(n_start < n - 1)
+        //     {
+        //         for (int i = m - 2; i >= m_start + 1; i--)
+        //         {
+        //             ans.push_back(matrix[i][n_start]);
+        //         }
+        //     }
+
             
-            self(self, m_start + 1, m - 1, n_start + 1, n - 1); 
-        };
+        //     self(self, m_start + 1, m - 1, n_start + 1, n - 1); 
+        // };
 
-        dfs(dfs, 0, m, 0 , n);
+        // dfs(dfs, 0, m, 0 , n);
+
+        
+
+        // for
+        int left = 0, top = 0;
+        int right = n - 1;
+        int bottom = m - 1;
+
+        while(left <= right && top <= bottom)
+        {
+            // left -> right
+            for (int i = left; i <= right; i++)
+            {
+                ans.push_back(matrix[top][i]);
+            }
+            top++;
+
+            // top -> bottom
+            for (int i = top; i <= bottom; i++)
+            {
+                ans.push_back(matrix[i][right]);
+            }
+            right--;
+
+            if(top <= bottom)
+            {
+                for (int j = right; j >= left; j--)
+                {
+                    ans.push_back(matrix[bottom][j]);
+                }
+                bottom--;
+            }
+
+            if(left <= right)
+            {
+                for (int j = bottom; j >= top; j--)
+                {
+                    ans.push_back(matrix[j][left]);
+                }
+                left++;
+            }
+        }
 
         return ans;
     }
