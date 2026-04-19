@@ -39,34 +39,71 @@ struct TreeNode {
 class Solution {
 public:
     void flatten(TreeNode* root) {
-        TreeNode dummy;
-        TreeNode *p = &dummy;
-        if (root == nullptr)
-        {
-            return;
+        //dfs 1
+        // TreeNode dummy;
+        // TreeNode *p = &dummy;
+        // if (root == nullptr)
+        // {
+        //     return;
+        // }
+
+        // auto dfs = [&](auto &&self, TreeNode* root) -> void {
+        //     if (root == nullptr)
+        //     {
+        //         return;
+        //     }
+            
+        //     TreeNode *node = new TreeNode();
+        //     node->val = root->val;
+        //     p->right = node;
+        //     p = p->right;
+
+        //     self(self, root->left);
+        //     self(self, root->right);
+        // };
+
+        // dfs(dfs, root);
+        // root->right = dummy.right->right;
+        // root->left = nullptr;
+
+        // if (root == nullptr)
+        // {
+        //     return;
+        // }
+
+        // dfs 2
+        // flatten(root->right);
+        // flatten(root->left);
+        // root->left = nullptr;
+        // root->right = preNode;
+        // preNode = root;
+
+        // return;
+
+        //o(1)
+        
+        auto curr = root;
+        while(curr != nullptr){
+            if (curr->left != nullptr)
+            {
+                auto next = curr->left;
+                auto pre = next;
+                while(pre->right != nullptr)
+                {
+                    pre = pre->right;
+                }
+                pre->right = curr->right;
+
+                curr->left = nullptr;
+                curr->right = next;
+            }
+            curr = curr->right;
         }
 
-        auto dfs = [&](auto &&self, TreeNode* root) -> void {
-            if (root == nullptr)
-            {
-                return;
-            }
-            
-            TreeNode *node = new TreeNode();
-            node->val = root->val;
-            p->right = node;
-            p = p->right;
-
-            self(self, root->left);
-            self(self, root->right);
-        };
-
-        dfs(dfs, root);
-        root->right = dummy.right->right;
-        root->left = nullptr;
-        return;
-        
     }
+
+private:
+    TreeNode *preNode = nullptr;
 };
 
 void list_print(TreeNode *root){
