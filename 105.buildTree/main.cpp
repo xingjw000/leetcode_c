@@ -48,28 +48,23 @@ public:
         {
             auto node = new TreeNode(preorder[i]);
             auto preNode = stack.top();
-            auto preNodeIndex = preNode->val;
+            auto preNodeIndex = inorderMap[preNode->val];
             auto node_index = inorderMap[node->val];
             if (node_index < preNodeIndex)
             {
                 preNode->left = node;
             }else{
-                stack.pop();
-                while(!stack.empty())
+                TreeNode* parent = nullptr;
+                while(!stack.empty() && inorderMap[node->val] > inorderMap[stack.top()->val])
                 {
-                    auto node2 = stack.top();
-                    auto node2_index = inorderMap[node2->val];
-                    if (node_index > node2_index)
-                    {
-                        node2->right = node;
-                    }else{
-                        preNode->right = node;
-                    }
+                    parent = stack.top();
+                    stack.pop();
                 }
+                parent->right = node;
             }
             stack.push(node);
         }
-        
+        return root;
     }
 };
 
@@ -85,25 +80,16 @@ void list_print(TreeNode *root){
 
 int main()
 {
-    TreeNode t1_node0(15);
-    TreeNode t1_node1(7);
-    TreeNode t1_node2(20, &t1_node0, &t1_node1);
-    TreeNode t1_node3(9);
-    TreeNode t1_node4(3, &t1_node3, &t1_node2);
+    vector<int> preorder{3,9,20,15,7};
+    vector<int> inorder{9,3,15,20,7};
 
-    cout << "t1:";
-    list_print(&t1_node4);
-    cout << endl;
+
 
     Solution sol;
-    cout << sol.maxDepth(&t1_node4) << endl;
+    auto ret = sol.buildTree(preorder, inorder);
 
-    TreeNode t2_node0(2);
-    TreeNode t2_node1(1, nullptr, &t2_node0);
-
-    cout << "t2:";
-    list_print(&t2_node1);
+    cout << "t1:";
+    list_print(ret);
     cout << endl;
-    cout << sol.maxDepth(&t2_node1) << endl;
     return 0;
 }
